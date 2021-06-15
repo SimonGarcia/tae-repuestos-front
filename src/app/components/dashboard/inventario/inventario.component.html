@@ -1,0 +1,37 @@
+<div class="container table-responsive-sm ">
+    <div class="d-flex justify-content-center mt-5">
+        <app-spinner *ngIf="loading"></app-spinner>
+        <table *ngIf="!loading" class="table table-hover ">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th class="text-center">Cantidad</th>
+                    <th class="text-center">Costo (US$)</th>
+                    <th class="text-center">Utilidad</th>
+                    <th class="text-center">Venta (US$)</th>
+                    <th style="width: 20%;" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i=index; let repuesto of repuestos | paginate: {itemsPerPage: 10, currentPage: page }">
+                    <td> {{ i+1 }} </td>
+                    <td> {{ repuesto.codigo }} </td>
+                    <td> {{ repuesto.nombre }} </td>
+                    <td class="text-center"> {{ repuesto.cantidad }} </td>
+                    <td class="text-center"> {{ repuesto.costo }} </td>
+                    <td class="text-center"> {{ repuesto.utilidad * 100 }}% </td>
+                    <td class="text-center"> {{ repuesto.venta }} </td>
+                    <td class="text-center">
+                        <i routerLink="/dashboard/compras" (click)="editar(repuesto)" class="fas fa-edit"></i>
+                        <i (click)="eliminarRepuesto(repuesto._id)" class="fas fa-trash"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center">
+        <pagination-controls *ngIf="!loading" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+    </div>
+</div>

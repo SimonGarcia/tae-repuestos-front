@@ -1,0 +1,78 @@
+<div *ngIf="mostrarError" class="alert alert-danger text-center" role="alert">
+    Por favor ingrese todos los campos.
+</div>
+
+<div class="container table-responsive-sm ">
+    <div class="d-flex justify-content-center mt-5">
+        <app-spinner *ngIf="loading"></app-spinner>
+        <div *ngIf="!loading" class="card">
+            <div class="card-header">
+                Compra de repuestos
+            </div>
+            <div class="card-body">
+                <form [formGroup]="comprarForm">
+                    <!-- <input type="hidden" formControlName="_id"> -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Código</span>
+                                </div>
+                                <input formControlName="codigo" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Nombre</span>
+                                </div>
+                                <input formControlName="nombre" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Cantidad</span>
+                                </div>
+                                <input formControlName="cantidad" type="number" min="0" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Costo</span>
+                                </div>
+                                <input formControlName="costo" type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">US$</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Utilidad</span>
+                                </div>
+                                <input formControlName="utilidad" type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button (click)="reset()" class="btn btn-outline-primary">Limpiar</button>
+                        <button (click)="comprar()" type="submit" (keyup)="comprar()" class="btn btn-primary">Finalizar</button>
+                        <!-- <button (click)="edit()" *ngIf="esEditable" type="submit" (keyup)="edit()" class="btn btn-primary">Finalizar</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

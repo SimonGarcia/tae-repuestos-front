@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-color">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Tae Autoparts</a>
+
+        <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id=" navbarNavAltMarkup" [ngbCollapse]="isCollapsed">
+            <div class="navbar-nav ">
+                <a routerLink="/dashboard" class="nav-link">Inicio</a>
+                <a routerLink="/dashboard/inventario" class="nav-link">Inventario</a>
+                <a routerLink="/dashboard/compras" class="nav-link">Compras</a>
+                <a routerLink="/dashboard/ventas" class="nav-link">Ventas</a>
+                <a routerLink="/dashboard/reportes" class="nav-link">Reportes</a>
+            </div>
+        </div>
+    </div>
+</nav>
