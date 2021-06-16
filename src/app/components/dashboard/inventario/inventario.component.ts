@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class InventarioComponent implements OnInit {
   repuestoForm = FormGroup
-  repuestos: Repuesto[] = [];
+  listRepuestos: Repuesto[] = [];
   public page: number = 0;
   loading = false;
   subRepuesto: Subscription = new Subscription();
@@ -27,7 +27,7 @@ export class InventarioComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.getRepuesto();
+    this.obtenerRepuestos();
   }
 
   ngOnDestroy(): void {
@@ -35,20 +35,12 @@ export class InventarioComponent implements OnInit {
     this.delRepuesto.unsubscribe();
   }
 
-/*   addRepuesto(form: FormGroup){
-    this._apiService.postRepuesto(form.value).subscribe(res =>{
-      this.resetForm(form);
-      console.log('Guardado');
-      
-    })
-  } */
 
-  getRepuesto(){
+  obtenerRepuestos(){
     this.loading = true
-    this.subRepuesto = this._apiService.getRepuestos().subscribe(res => {
-      this._apiService.repuestos = res as Repuesto[];
+    this.subRepuesto = this._apiService.getRepuestos().subscribe(data => {
+      this.listRepuestos = data;
       this.loading = false;
-      this.repuestos = this._apiService.repuestos
     }, error=>{
       console.log(error);
       this.loading = false;
@@ -56,21 +48,14 @@ export class InventarioComponent implements OnInit {
     });
   }
 
-  resetForm(form?: FormGroup){
-    if (form){
-      form.reset();
-      this._apiService.repuestoSeleccionado = new Repuesto();
-    }
-  }
-
 
   eliminarRepuesto(_id: any){
     this.loading = true;
     this.delRepuesto = this._apiService.deleteRepuesto(_id).subscribe(res =>{
       console.log(res);
-      this.getRepuesto();
+      this.obtenerRepuestos();
       this.loading = false;
-      this.toastr.warning('¡El repuesto ha sido eliminado!', 'Eliminado.');
+      this.toastr.error('¡El repuesto ha sido eliminado!', 'Eliminado.');
     }, error => {
       console.log(error);
       this.loading = false;
@@ -82,12 +67,6 @@ export class InventarioComponent implements OnInit {
   editarRepuesto(id:any){
     //this._apiService.id = id;
     this.router.navigateByUrl("/dashboard/compras/"+ id); 
-  }
-  
-  editar(repuesto: Repuesto):void{
-    this._apiService.repuestoSeleccionado = Object.assign({}, repuesto);
-    console.log(repuesto);
-    
   }
   
 }

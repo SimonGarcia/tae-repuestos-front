@@ -8,23 +8,23 @@
                     <th>Código</th>
                     <th>Nombre</th>
                     <th class="text-center">Cantidad</th>
-                    <th class="text-center">Costo (US$)</th>
+                    <th class="text-center">Costo</th>
                     <th class="text-center">Utilidad</th>
-                    <th class="text-center">Venta (US$)</th>
+                    <th class="text-center">Venta</th>
                     <th style="width: 20%;" class="text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i=index; let repuesto of repuestos | paginate: {itemsPerPage: 10, currentPage: page }">
+                <tr *ngFor="let i=index; let repuesto of listRepuestos | paginate: {itemsPerPage: 10, currentPage: page }">
                     <td> {{ i+1 }} </td>
                     <td> {{ repuesto.codigo }} </td>
                     <td> {{ repuesto.nombre }} </td>
                     <td class="text-center"> {{ repuesto.cantidad }} </td>
-                    <td class="text-center"> {{ repuesto.costo }} </td>
-                    <td class="text-center"> {{ repuesto.utilidad * 100 }}% </td>
-                    <td class="text-center"> {{ repuesto.venta }} </td>
+                    <td class="text-center"> {{ repuesto.costo | currency:'USD' }} </td>
+                    <td class="text-center"> {{ repuesto.utilidad | percent }} </td>
+                    <td class="text-center"> {{ repuesto.venta | currency:'USD' }} </td>
                     <td class="text-center">
-                        <i routerLink="/dashboard/compras" (click)="editar(repuesto)" class="fas fa-edit"></i>
+                        <i [routerLink]="['/dashboard/compras/', repuesto._id]" class="fas fa-edit"></i>
                         <i (click)="eliminarRepuesto(repuesto._id)" class="fas fa-trash"></i>
                     </td>
                 </tr>

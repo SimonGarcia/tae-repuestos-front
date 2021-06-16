@@ -16,10 +16,9 @@ export class ComprasComponent implements OnInit {
   //Variables
   comprarForm: FormGroup;
   loading = false;
+  titulo = 'comprar repuesto';
   mostrarError = false;
-  buyRepuesto: Subscription = new Subscription();
-  esEditable: boolean = false;
-  id: any;
+  id: string | null;
 
   constructor(private fb: FormBuilder,
               private _apiService: ApiService,
@@ -34,23 +33,21 @@ export class ComprasComponent implements OnInit {
       costo: ['', Validators.required],
       utilidad: ['30', Validators.required],
     })
+
+    //Obtiene el ID de una registro de la bd en la url 
+    this.id = this.activeRoute.snapshot.paramMap.get('id');
   }
   
 
   ngOnInit(): void {
-
-    //Editar un repuesto
-    this.id = this.activeRoute.snapshot.paramMap.get('id');
-    this._apiService.id = this.id; 
-    
+    this.esEditar();
   }
   
   ngOnDestroy(): void {
-    this.buyRepuesto.unsubscribe();
   }
 
   //AGREGAR UN NUEVO REPUESTO A LA BD
-  comprar(){
+  agregarRepuesto(){
     if (this.comprarForm.invalid) {
       this.error();
       return;
@@ -63,11 +60,10 @@ export class ComprasComponent implements OnInit {
     const utilidad:number = this.comprarForm.get('utilidad')?.value;
     
     const diferencia = utilidad/100*costo;
-    const venta = Math.round(diferencia + costo);
+    const venta =diferencia + costo;
     this.loading = true;
-    
-
-     const infoRepuesto: Repuesto = {
+  
+     const REPUESTO: Repuesto = {
       codigo: codigo,
       nombre: nombre,
       cantidad: cantidad,
@@ -75,27 +71,55 @@ export class ComprasComponent implements OnInit {
       utilidad: utilidad/100,
       venta: venta
     }
-      this.buyRepuesto = this._apiService.postRepuesto(infoRepuesto).subscribe(res =>{
-      console.log(res);
-      this.loading= false;
-      this.toastr.success('¡El repuesto ha sido agregado correctamente!', 'Agregado.');
-    }, error =>{
-      console.log(error);
-      this.loading = false;
-      this.toastr.error('Ha ocurrido un error', 'Error.')
-    }); 
-    this.reset();
+
+     //SI existe un ID, la operacion es editar
+      if (this.id !== null) {
+        //editamos repuesto
+        this._apiService.putRepuesto(this.id, REPUESTO).subscribe(res => {
+          console.log(res);
+          this.loading= false;
+          this.toastr.success('¡El repuesto ha sido actualizado correctamente!', 'Actualizado.');
+        }, error => {
+          console.log(error);
+          this.loading = false;
+          this.toastr.error('Ha ocurrido un error', 'Error.')
+        })
+
+      }else{
+        //agregamos repuesto
+          this._apiService.postRepuesto(REPUESTO).subscribe(res =>{
+          console.log(res);
+          this.loading= false;
+          this.toastr.success('¡El repuesto ha sido agregado correctamente!', 'Agregado.');
+        }, error =>{
+          console.log(error);
+          this.loading = false;
+          this.toastr.error('Ha ocurrido un error', 'Error.')
+        }); 
+        this.comprarForm.reset();
+      }
   }
 
-  reset(){
-    this.comprarForm.patchValue({
-      codigo: "",
-      nombre: "",
-      cantidad: 0,
-      costo: 0,
-      utilidad: 30,
-      venta: 0
-    })
+  esEditar(){
+    if (this.id !== null) {
+      this.loading = true;
+      this.titulo = 'Editar repuesto'
+      this._apiService.getRepueestoById(this.id).subscribe(data =>{
+        this.loading = false;
+        this.comprarForm.setValue({
+          codigo: data.codigo,
+          nombre: data.nombre,
+          cantidad: data.cantidad,
+          costo: data.costo,
+          utilidad: data.utilidad*100,
+        })
+      }, error => {
+        console.log(error);
+        this.loading = false;
+        this.toastr.error('Ha ocurrido un error', 'Error.')
+      });
+      this.comprarForm.reset();
+    }
   }
 
   error(){

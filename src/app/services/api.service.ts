@@ -1,47 +1,42 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Repuesto } from '../models/repuesto';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  //Variables
-  repuestos: Repuesto[] = []; 
-  repuestoSeleccionado: Repuesto;
-  id:string = "";
-  
   //URLS
-  RepuestosURL = 'https://tae-repuestos.herokuapp.com/api/repuestos';
+  url = 'https://tae-repuestos.herokuapp.com/api/repuestos/';
+  devUrl = 'http://localhost:3000/api/repuestos/'
 
 
-  constructor(private http: HttpClient) {
-    this.repuestoSeleccionado = new Repuesto();
-   }
+  constructor(private http: HttpClient) {  }
 
-  //Obtiene todos los repuestos desde la API
-  getRepuestos(){
-    return this.http.get(this.RepuestosURL);
+  //Obtiene todos los registros desde la API
+  getRepuestos(): Observable<any> {
+    return this.http.get(this.url);
   }
 
-  getRepuestosById(_id:string){
-    console.log(this.http.get(this.RepuestosURL + `/${_id}`));
-    
+  //Elimina un registro de la base de datos
+  deleteRepuesto(id: string): Observable<any> {
+    return this.http.delete(this.url + id);
   }
 
-  // Agrega un nuevo empleado
-  postRepuesto(Repuesto: Repuesto){
-    return this.http.post(this.RepuestosURL, Repuesto);
+  //Guarda un registro en la base de datos
+  postRepuesto(repuesto: Repuesto): Observable<any> {
+    return this.http.post(this.url, repuesto);
   }
 
-  //Actualiza un empleado
-  putRepuesto(repuesto: Repuesto){
-    return this.http.put(this.RepuestosURL + `/${repuesto._id}`, repuesto);
+  //Obtiene un registro en especifico de la base de datos
+  getRepueestoById(id: string): Observable<any> {
+    return this.http.get(this.url + id);
   }
 
-  //Elimina un empleado
-  deleteRepuesto(_id: string){
-    return this.http.delete(this.RepuestosURL + `/${_id}`);
+  //Edita un registro en especifico de la base de datos
+  putRepuesto(id: string, repuesto: Repuesto): Observable <any>{
+    return this.http.put(this.url + id, repuesto);
   }
  
 }

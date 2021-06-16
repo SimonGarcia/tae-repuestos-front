@@ -7,10 +7,10 @@
         <app-spinner *ngIf="loading"></app-spinner>
         <div *ngIf="!loading" class="card">
             <div class="card-header">
-                Compra de repuestos
+                {{ titulo }}
             </div>
             <div class="card-body">
-                <form [formGroup]="comprarForm">
+                <form [formGroup]="comprarForm" (ngSubmit)="agregarRepuesto()">
                     <!-- <input type="hidden" formControlName="_id"> -->
                     <div class="row">
                         <div class="col">
@@ -67,9 +67,9 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <button (click)="reset()" class="btn btn-outline-primary">Limpiar</button>
-                        <button (click)="comprar()" type="submit" (keyup)="comprar()" class="btn btn-primary">Finalizar</button>
-                        <!-- <button (click)="edit()" *ngIf="esEditable" type="submit" (keyup)="edit()" class="btn btn-primary">Finalizar</button> -->
+                        <button routerLink="/dashboard/inventario" class="btn btn-outline-primary">Volver</button>
+                        <button type="submit" (keyup)="agregarRepuesto()" class="btn btn-primary">Finalizar</button>
+
                     </div>
                 </form>
             </div>
