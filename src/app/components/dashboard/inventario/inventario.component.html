@@ -1,8 +1,8 @@
 <div class="container table-responsive-sm ">
     <form action="" class="mt-3">
         <div class="form-group">
-            <h5>Inventario</h5>
-            <!-- <input [(ngModel)]="searchString" name="searchString" style="width: 35%;" class="form-control" type="text" placeholder="Buscar Repuesto..."> -->
+            <h5>Listado de Repuestos</h5>
+            <input [(ngModel)]="searchString" name="searchString" style="width: 35%;" class="form-control" type="text" placeholder="Buscar Repuesto...">
         </div>
     </form>
     <div class="d-flex justify-content-center mt-3">
@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let i=index; let repuesto of listRepuestos | paginate: {itemsPerPage: 10, currentPage: page } ">
+                    <tr *ngFor="let repuesto of listRepuestos | paginate: {itemsPerPage: 10, currentPage: page } | filter: searchString ; let i=index; ">
                         <td> {{ i+1 }} </td>
                         <td> {{ repuesto.codigo }} </td>
                         <td> {{ repuesto.nombre }} </td>
