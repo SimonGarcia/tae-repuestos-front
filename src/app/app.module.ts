@@ -7,11 +7,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { SharedModule } from './components/shared/shared.module';
+import { FilterPipe } from './pipes/filter.pipe';
+
+
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FilterPipe,
+    
   ],
   imports: [
     BrowserModule,

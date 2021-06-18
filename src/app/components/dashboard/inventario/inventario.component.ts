@@ -18,6 +18,7 @@ export class InventarioComponent implements OnInit {
   listRepuestos: Repuesto[] = [];
   public page: number = 0;
   loading = false;
+  searchString = "";
   subRepuesto: Subscription = new Subscription();
   delRepuesto: Subscription = new Subscription();
 
