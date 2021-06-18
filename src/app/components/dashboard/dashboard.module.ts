@@ -9,7 +9,6 @@ import { ComprasComponent } from './compras/compras.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { SharedModule } from '../shared/shared.module';
-import { ListadoRepuestosComponent } from './listado-repuestos/listado-repuestos.component';
 
 
 @NgModule({
@@ -20,7 +19,6 @@ import { ListadoRepuestosComponent } from './listado-repuestos/listado-repuestos
     ComprasComponent,
     VentasComponent,
     ReportesComponent,
-    ListadoRepuestosComponent,
 
   ],
   imports: [

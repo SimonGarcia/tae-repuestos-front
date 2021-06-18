@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-/* import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Repuesto } from '../../../models/repuesto';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
- */
+
 
 
 @Component({
@@ -14,24 +14,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./inventario.component.scss']
 })
 export class InventarioComponent implements OnInit {
-/*   repuestoForm = FormGroup
+  repuestoForm = FormGroup
   listRepuestos: Repuesto[] = [];
   public page: number = 0;
   loading = false;
   searchString = "";
   subRepuesto: Subscription = new Subscription();
-  delRepuesto: Subscription = new Subscription(); */
+  delRepuesto: Subscription = new Subscription();
 
-  constructor(/* private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private _apiService: ApiService,
               private router: Router,
-              private toastr: ToastrService */) { }
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    //this.obtenerRepuestos();
+    this.obtenerRepuestos();
   }
 
- /* ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.subRepuesto.unsubscribe();  
     this.delRepuesto.unsubscribe();
   }
@@ -68,6 +68,6 @@ export class InventarioComponent implements OnInit {
   editarRepuesto(id:any){
     //this._apiService.id = id;
     this.router.navigateByUrl("/dashboard/compras/"+ id); 
-  } */
+  }
   
 }
