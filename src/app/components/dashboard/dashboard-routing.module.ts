@@ -4,8 +4,10 @@ import { ComprasComponent } from './compras/compras.component';
 import { InventarioComponent } from './inventario/inventario.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { ListadoRepuestosComponent } from './listado-repuestos/listado-repuestos.component';
 
 const routes: Routes = [
+  { path: '', component: ListadoRepuestosComponent},
   { path: 'inventario', component: InventarioComponent },
   { path: 'compras', component: ComprasComponent },
   { path: 'compras/:id', component: ComprasComponent },

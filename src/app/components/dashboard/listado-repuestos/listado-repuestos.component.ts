@@ -1,37 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-/* import { FormBuilder, FormGroup } from '@angular/forms';
-import { Repuesto } from '../../../models/repuesto';
-import { ApiService } from '../../../services/api.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
- */
-
+import { Repuesto } from 'src/app/models/repuesto';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-inventario',
-  templateUrl: './inventario.component.html',
-  styleUrls: ['./inventario.component.scss']
+  selector: 'app-listado-repuestos',
+  templateUrl: './listado-repuestos.component.html',
+  styleUrls: ['./listado-repuestos.component.scss']
 })
-export class InventarioComponent implements OnInit {
-/*   repuestoForm = FormGroup
+export class ListadoRepuestosComponent implements OnInit {
+  repuestoForm = FormGroup
   listRepuestos: Repuesto[] = [];
   public page: number = 0;
   loading = false;
   searchString = "";
   subRepuesto: Subscription = new Subscription();
-  delRepuesto: Subscription = new Subscription(); */
+  delRepuesto: Subscription = new Subscription();
 
-  constructor(/* private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private _apiService: ApiService,
               private router: Router,
-              private toastr: ToastrService */) { }
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    //this.obtenerRepuestos();
+    this.obtenerRepuestos();
   }
 
- /* ngOnDestroy(): void {
+  ngOnDestroy(): void {
     this.subRepuesto.unsubscribe();  
     this.delRepuesto.unsubscribe();
   }
@@ -68,6 +66,5 @@ export class InventarioComponent implements OnInit {
   editarRepuesto(id:any){
     //this._apiService.id = id;
     this.router.navigateByUrl("/dashboard/compras/"+ id); 
-  } */
-  
+  }
 }

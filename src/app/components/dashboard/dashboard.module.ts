@@ -9,6 +9,7 @@ import { ComprasComponent } from './compras/compras.component';
 import { VentasComponent } from './ventas/ventas.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { SharedModule } from '../shared/shared.module';
+import { ListadoRepuestosComponent } from './listado-repuestos/listado-repuestos.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     ComprasComponent,
     VentasComponent,
     ReportesComponent,
+    ListadoRepuestosComponent,
 
   ],
   imports: [
