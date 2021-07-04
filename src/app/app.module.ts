@@ -20,7 +20,8 @@ import { SharedModule } from './components/shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+
   ],
   providers: [],
   bootstrap: [AppComponent]

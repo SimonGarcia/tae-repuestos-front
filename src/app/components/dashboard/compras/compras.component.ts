@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Repuesto } from '../../../models/repuesto';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -16,7 +15,7 @@ export class ComprasComponent implements OnInit {
   //Variables
   comprarForm: FormGroup;
   loading = false;
-  titulo = 'comprar repuesto';
+  titulo = 'Comprar repuesto';
   mostrarError = false;
   id: string | null;
 
@@ -43,8 +42,6 @@ export class ComprasComponent implements OnInit {
     this.esEditar();
   }
   
-  ngOnDestroy(): void {
-  }
 
   //AGREGAR UN NUEVO REPUESTO A LA BD
   agregarRepuesto(){

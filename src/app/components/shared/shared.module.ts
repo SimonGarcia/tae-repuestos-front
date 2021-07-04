@@ -18,7 +18,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ReactiveFormsModule,
     NgxPaginationModule,
 
-
   ],
   exports:[
     FormsModule,
@@ -26,6 +25,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     HttpClientModule,
     NgxPaginationModule,
     SpinnerComponent,
+  
 
   ]
 })

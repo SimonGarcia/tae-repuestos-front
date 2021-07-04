@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Repuesto } from '../../../models/repuesto';
 import { ApiService } from '../../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +13,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./inventario.component.scss']
 })
 export class InventarioComponent implements OnInit {
-  repuestoForm = FormGroup
   listRepuestos: Repuesto[] = [];
   public page: number = 0;
   loading = false;
@@ -22,8 +20,7 @@ export class InventarioComponent implements OnInit {
   subRepuesto: Subscription = new Subscription();
   delRepuesto: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder,
-              private _apiService: ApiService,
+  constructor(private _apiService: ApiService,
               private router: Router,
               private toastr: ToastrService) { }
 

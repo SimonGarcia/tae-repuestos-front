@@ -1,1 +1,125 @@
-<p>ventas works!</p>
+<div *ngIf="mostrarError" class="alert alert-danger text-center" role="alert">
+    Por favor ingrese todos los campos.
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="d-flex justify-content-center mt-5">
+            <app-spinner *ngIf="loading"></app-spinner>
+            <div *ngIf="!loading" class="card">
+                <div class="card-header">
+                    Buscar repuesto
+                </div>
+                <div class="card-body">
+                    <ng-autocomplete [data]="listRepuestos" [searchKeyword]="keyword" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='selectEvent($event)' placeholder="Ingrese el código del repuesto">
+
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.codigo"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="!loading" class="row">
+        <div class="d-flex justify-content-center mt-5">
+            <div class="card">
+                <div class="card-header">
+                    Venta de repuesto
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="ventaForm" (ngSubmit)="venderRepuesto()">
+                        <!-- <input type="hidden" formControlName="_id"> -->
+                        <div class="row">
+                            <div hidden class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Código</span>
+                                    </div>
+                                    <input formControlName="codigo" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nombre</span>
+                                    </div>
+                                    <input formControlName="nombre" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Cantidad</span>
+                                    </div>
+                                    <input formControlName="cantidad" type="number" min="0" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Costo</span>
+                                    </div>
+                                    <input formControlName="costo" type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">US$</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Precio</span>
+                                    </div>
+                                    <input formControlName="precio" type="number" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">US$</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Utilidad</span>
+                                    </div>
+                                    <input formControlName="utilidad" type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">US$</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Ganancia</span>
+                                    </div>
+                                    <input formControlName="ganancia" type="number" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button routerLink="/dashboard/inventario" class="btn btn-outline-primary">Volver</button>
+                            <button type="submit" (keyup)="venderRepuesto()" class="btn btn-primary">Finalizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { SharedModule } from '../shared/shared.module';
 import { FilterPipe } from 'src/app/pipes/filter.pipe';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 
 @NgModule({
@@ -20,12 +21,14 @@ import { FilterPipe } from 'src/app/pipes/filter.pipe';
     ComprasComponent,
     VentasComponent,
     ReportesComponent,
-    FilterPipe
+    FilterPipe,
+
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    AutocompleteLibModule
   ]
 })
 export class DashboardModule { }
