@@ -26,7 +26,7 @@ export class VentasService {
 
   //Guarda un registro en la base de datos
   postVenta(venta: Venta): Observable<any> {
-    return this.http.post(this.devUrl, venta);
+    return this.http.post(this.url, venta);
   }
 
   //Obtiene un registro en especifico de la base de datos
