@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe} from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -29,6 +29,9 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     DashboardRoutingModule,
     SharedModule,
     AutocompleteLibModule
+  ],
+  providers:[
+    DecimalPipe
   ]
 })
 export class DashboardModule { }

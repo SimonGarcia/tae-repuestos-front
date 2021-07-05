@@ -5,6 +5,8 @@ import { Repuesto } from 'src/app/models/repuesto';
 import { ApiService } from '../../../services/api.service';
 import { Venta } from '../../../models/venta';
 import { VentasService } from '../../../services/ventas.service';
+import { DecimalPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-ventas',
@@ -29,7 +31,8 @@ export class VentasComponent implements OnInit {
   constructor(private toastr: ToastrService,
               private fb: FormBuilder,
               private _apiService: ApiService,
-              private _ventaService: VentasService) { 
+              private _ventaService: VentasService,
+              public decimalPipe: DecimalPipe) { 
   
         //VALIDACIONES
         this.ventaForm = this.fb.group({
@@ -57,13 +60,20 @@ export class VentasComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  //Evento de cuando selecciono un item del campo selec2
   selectEvent(item:any) {
    
-    this.precio = item.venta;
     this.costo = item.costo;
-    this.utilidad = this.precio - this.costo;
-    this.ganancia = Math.round((this.utilidad*100)/this.costo)
+
+    //Uso del decimal pipe para redondear los valores
+    let precio = this.decimalPipe.transform(item.venta, '1.2-2');
+    this.precio = parseFloat(precio || '');
+    
+    let utilidad = this.decimalPipe.transform(this.precio - this.costo, '1.2-2');
+    this.utilidad = parseFloat(utilidad || '');
+
+    let ganancia = this.decimalPipe.transform((this.utilidad*100)/this.costo, '1.2-2')
+    this.ganancia = parseFloat(ganancia || '');
    
     this.ventaForm.patchValue({
         codigo: item.codigo,
@@ -73,15 +83,18 @@ export class VentasComponent implements OnInit {
         utilidad: this.utilidad,
         ganancia: this.ganancia
       }) 
-      
-      
   }
+
+
   venderRepuesto(){
+
+    //Valida que el formulario este completo
     if (this.ventaForm.invalid) {
       this.error();
       return;
     }
     
+    //Obtengo los valores de los campos del formulario
     const codigo = this.ventaForm.get('codigo')?.value;
     const nombre = this.ventaForm.get('nombre')?.value;
     const cantidad:number = this.ventaForm.get('cantidad')?.value;
@@ -92,6 +105,7 @@ export class VentasComponent implements OnInit {
     
     this.loading = true;
 
+    //Asigno los valores de los campos al objeto a guardar en la BD
     const VENTA: Venta = {
       codigo: codigo,
       nombre: nombre,
@@ -102,6 +116,7 @@ export class VentasComponent implements OnInit {
       ganancia: ganancia 
     }
     
+    //Guardo los datos en la BD
     this._ventaService.postVenta(VENTA).subscribe(res => {
       console.log(res);
       this.loading= false;
@@ -114,7 +129,7 @@ export class VentasComponent implements OnInit {
     this.ventaForm.reset();
   }
 
-
+//Muestra el error de validacion 
   error(){
     this.mostrarError = true;
     //Muestra por 3seg el mensaje de error
@@ -123,4 +138,17 @@ export class VentasComponent implements OnInit {
       }, 3000);
   }
 
+  //Calcula la ganancia y la utilidad de la venta al ingresar un nuevo precio de venta.
+  getUtilidadAndGanacia(){
+    this.precio = this.ventaForm.get('precio')?.value;
+    this.utilidad = this.precio - this.costo;
+    let ganancia = this.decimalPipe.transform((this.utilidad*100)/this.costo, '1.2-2')
+    this.ganancia = parseFloat(ganancia || '');
+    
+    this.ventaForm.patchValue({
+      precio: this.precio,
+      utilidad: this.utilidad,
+      ganancia: this.ganancia
+    });
+  }
 }
